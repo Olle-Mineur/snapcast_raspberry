@@ -1,0 +1,48 @@
+version: '3'
+services:
+  snapserver:
+    image: lschmierer/snapserver:latest
+    network_mode: host
+    volumes:
+      - ./snapcast-config:/root/.config/snapcast/
+      - /tmp/snapfifo:/tmp/snapfifo
+    restart: unless-stopped
+
+  # Spotify Connect (Multi-User / Discovery Mode)
+  librespot:
+    image: giof71/librespot:latest
+    network_mode: host
+    environment:
+      - DEVICE_NAME=SnapcastSpotify
+      - BITRATE=320
+      # The backend pipe sends audio into the snapfifo buffer
+      - BACKEND_NAME=pipe
+      - BACKEND_DEVICE=/tmp/snapfifo/spotify
+    # No username/password = Discovery Mode (Anyone can connect)
+    depends_on:
+      - snapserver
+    volumes:
+      - /tmp/snapfifo:/tmp/snapfifo
+    restart: unless-stopped
+
+  # AirPlay (Shairport-Sync)
+  shairport-sync:
+    image: mikebrady/shairport-sync:latest
+    network_mode: host
+    command: --output=pipe --path=/tmp/snapfifo/airplay --metadata-pipename=/tmp/snapfifo/airplay-meta
+    volumes:
+      - /tmp/snapfifo:/tmp/snapfifo
+    depends_on:
+      - snapserver
+    restart: unless-stopped
+
+  # Mopidy (Local Music + Radio)
+  mopidy:
+    image: irisplayer/mopidy:latest
+    network_mode: host
+    volumes:
+      #- /path/to/your/music:/music
+      - ./mopidy/config:/config
+      - /tmp/snapfifo:/tmp/snapfifo
+    environment:
+      - PULSE_SERVER=unix:/run/user/1000/pulse/native

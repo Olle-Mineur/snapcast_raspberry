@@ -1,0 +1,25 @@
+#EXTM3U
+
+#EXTINF:-1,Sveriges Radio P2 (FLAC Lossless)
+https://live1.sr.se/p2-flac
+
+#EXTINF:-1,Sveriges Radio P1 (AAC 320kbps)
+https://live1.sr.se/p1-aac-320
+
+#EXTINF:-1,Sveriges Radio P3 (AAC 320kbps)
+https://live1.sr.se/p3-aac-320
+
+#EXTINF:-1,Sveriges Radio P4 Kalmar (AAC 320kbps)
+https://live1.sr.se/p4kalm-aac-320
+
+#EXTINF:-1,Rockklassiker
+https://live-bauerse-fm.sharp-stream.com/rockklassiker_instream_se_mp3
+
+#EXTINF:-1,NRJ Sweden
+https://live-bauerse-fm.sharp-stream.com/nrj_instream_se_mp3
+
+#EXTINF:-1,Bandit Rock
+https://live-bauerse-fm.sharp-stream.com/bandit_instream_se_mp3
+
+#EXTINF:-1,Mix Megapol
+https://live-bauerse-fm.sharp-stream.com/mixmegapol_instream_se_mp3
